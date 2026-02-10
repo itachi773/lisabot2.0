@@ -1,7 +1,16 @@
-let handler  = async (m, { conn }) => {
-       conn.sendFile(m.chat, 'media/Buenos días.mp3', '', 'xd', m)
+let handler = async (m, { conn }) => {
+  await conn.sendFile(
+    m.chat,
+    './media/Buenos días.mp3',
+    'Buenos_dias.mp3',
+    null,
+    m
+  )
 }
+
 handler.command = /^(bd)$/i
 handler.fail = null
-handler.exp = 100
+handler.exp = 0
+
 module.exports = handler
+

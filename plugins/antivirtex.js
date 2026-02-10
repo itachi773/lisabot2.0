@@ -1,33 +1,38 @@
-let { Presence } = require('@adiwajshing/baileys')
 let handler = async (m, { conn, args, usedPrefix, command }) => {
-	
-	if(!args || !args[0]) {
-		await conn.updatePresence(m.chat, Presence.composing) 
-		conn.reply(m.chat, `*¡Formato incorrecto! Ejemplo :*\n\n	*${usedPrefix + command} on*\n	*○ ${usedPrefix + command} off*`, m)
-	} else if(args[0] == 'on') {
-		let cek = global.DATABASE._data.chats[m.chat].novirtex
-	if(cek) return conn.reply(m.chat, `*Anti Virtex ha estado activo en este grupo.*`, m)
-		await conn.updatePresence(m.chat, Presence.composing) 
-		global.DATABASE._data.chats[m.chat].novirtex = true
-		conn.reply(m.chat, `*Anti Virtex activado con éxito.*`, m)
-	} else if(args[0] == 'off') {
-		let cek = global.DATABASE._data.chats[m.chat].novirtex
+  let chat = global.DATABASE._data.chats[m.chat]
+  if (!args[0]) {
+    return conn.reply(
+      m.chat,
+      `*¡Formato incorrecto!*\n\n*${usedPrefix + command} on*\n*${usedPrefix + command} off*`,
+      m
+    )
+  }
 
-	if(!cek) return conn.reply(m.chat, `*Anti Virtex ha sido inhabilitado en este grupo.*`, m)
-		await conn.updatePresence(m.chat, Presence.composing) 
-		global.DATABASE._data.chats[m.chat].novirtex = false
-		conn.reply(m.chat, `*Anti Virtex desactivado con éxito.*`, m)
-	} else {
-		await conn.updatePresence(m.chat, Presence.composing) 
-		conn.reply(m.chat, `*¡Formato incorrecto! Ejemplo :*\n\n	*${usedPrefix + command} on*\n	*○ ${usedPrefix + command} off*`, m)
-	} 
+  if (args[0].toLowerCase() === 'on') {
+    if (chat.novirtex) return conn.reply(m.chat, '*Anti Virtex ya está activado en este grupo.*', m)
+    chat.novirtex = true
+    return conn.reply(m.chat, '*Anti Virtex activado con éxito.*', m)
+  }
+
+  if (args[0].toLowerCase() === 'off') {
+    if (!chat.novirtex) return conn.reply(m.chat, '*Anti Virtex ya está desactivado en este grupo.*', m)
+    chat.novirtex = false
+    return conn.reply(m.chat, '*Anti Virtex desactivado con éxito.*', m)
+  }
+
+  return conn.reply(
+    m.chat,
+    `*¡Formato incorrecto!*\n\n*${usedPrefix + command} on*\n*${usedPrefix + command} off*`,
+    m
+  )
 }
-handler.help = ['antivirtex *on/off*']
-handler.tags = ['group admin']
-handler.command = /^(antivirtex)$/i
-handler.owner = false
+
+handler.help = ['antivirtex on/off']
+handler.tags = ['group']
+handler.command = /^antivirtex$/i
 handler.admin = true
 handler.botAdmin = true
 handler.exp = 0
 handler.limit = false
+
 module.exports = handler

@@ -1,24 +1,25 @@
-const fetch = require('node-fetch')
-const FormData = require('form-data')
-const { MessageType } = require('@adiwajshing/baileys')
+let handler = async (m, { conn, text }) => {
+  if (!text) throw 'Uhm… ¿y el texto?'
 
-let handler  = async (m, { conn, text }) => {
-  if (text) conn.sendFile(m.chat, global.API('xteam', '/attp', { file: '', text }), 'attp.webp', '', m, false, { asSticker: true })
-  else throw 'Uhm ... El texto?'
+  let url = global.API('xteam', '/attp', { text })
+  await conn.sendFile(
+    m.chat,
+    url,
+    'attp.webp',
+    '',
+    m,
+    false,
+    { asSticker: true }
+  )
 }
-handler.help = ['attp <teks>']
+
+handler.help = ['attp <texto>']
 handler.tags = ['sticker']
 handler.command = /^attp$/i
-handler.owner = false
-handler.mods = false
-handler.premium = false
-handler.group = false
-handler.private = false
-
-handler.admin = false
-handler.botAdmin = false
-
+handler.exp = 0
+handler.limit = true
 handler.fail = null
 
 module.exports = handler
+
 

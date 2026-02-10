@@ -9,7 +9,7 @@ CFonts.say('lisabot\nWhatsApp Bot', {
   align: 'center',
   gradient: ['red', 'magenta']
 })
-CFonts.say(`'Itachi'`, {
+CFonts.say(`'DocSebas'`, {
   font: 'console',
   align: 'center',
   gradient: ['red', 'magenta']
